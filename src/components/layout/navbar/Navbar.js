@@ -6,7 +6,7 @@ const Navbar = () => {
   return (
     <nav className="nav-wrapper indigo lighten-1">
       <div className="container">
-        <Link to='/' className="brand-logo left-align">NFT.finance <sub>Beta</sub></Link>
+        <Link to='/' className="brand-logo left-align">DAO.nft<sub>Beta</sub></Link>
         <NavbarLinks/>
       </div>
     </nav>

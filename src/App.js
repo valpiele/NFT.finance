@@ -69,8 +69,6 @@ class App extends Component {
           <Route path='/newlease' component={NewLeaseOffersPage} />
           <Route path='/myleaseoffers' component={MyLeaseOffers} />
           <Route path='/allleaseoffers' component={AllLeaseOffersPage} />
-          <Route path='/newloan' component={NewLoanRequestPage} />
-          <Route path='/myloans' component={MyLoanRequestsPage} />
           <Route path='/allloans' component={AllLoanRequestsPage} />
           <Route path='/' component={HomePage} />
         </Switch>
