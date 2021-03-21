@@ -23,7 +23,7 @@ export const getWeb3Account = async () => {
 export const getAllVotingProposals = async (address) => {
     if (window.ethereum) {
       const web3 = new Web3(window.ethereum);
-      const crt = new web3.eth.Contract(contractInterface, VOTEANDAUCTIONCONTRACT, { from: address });
+      const crt = new web3.eth.Contract(contractInterface, VOTE_AND_AUCTION_CONTRACT_ADDRESS, { from: address });
       const votingProposalsNumber = parseInt(await crt.methods.getAllVotingProposalsLen().call())
       return Promise.all(
         [...Array(votingProposalsNumber).keys()].map(
@@ -37,10 +37,10 @@ export const getAllVotingProposals = async (address) => {
 export const approveNFT = async (erc721ContractAddress, userAddress, tokenIdNFT) => {
     const web3 = new Web3(window.ethereum);
     const erc721crt = new web3.eth.Contract(
-        erc20ContractInterface,
-        VOTE_TOKEN,
+        erc721ContractInterface,
+        erc721ContractAddress,
         {from: userAddress}
-    );
+      );
   
     // gas estimate
     erc721crt.methods.approve(VOTE_AND_AUCTION_CONTRACT_ADDRESS, tokenIdNFT).estimateGas((error, gasAmount) => {
@@ -58,13 +58,13 @@ export const approveNFT = async (erc721ContractAddress, userAddress, tokenIdNFT)
 
 export const approveVoteTokens = async (userAddress, numberOfTokens) => {
     const web3 = new Web3(window.ethereum);
-    const erc721crt = new web3.eth.Contract(
-      erc721ContractInterface,
-      erc721ContractAddress,
+    const erc20crt = new web3.eth.Contract(
+      erc20ContractInterface,
+      VOTE_TOKEN,
       {from: userAddress}
     );
   
-    erc721crt.methods.approve(VOTE_AND_AUCTION_CONTRACT_ADDRESS, numberOfTokens).send().on('transactionHash', (hash) => {
+    erc20crt.methods.approve(VOTE_AND_AUCTION_CONTRACT_ADDRESS, numberOfTokens).send().on('transactionHash', (hash) => {
       processingToast(hash);
     }).on('receipt', (receipt) => {
       successToast("Vote Tokens have been approved!");
